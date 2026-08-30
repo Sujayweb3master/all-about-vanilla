@@ -3,7 +3,6 @@ let currentOperator;
 let accumulator = 0;
 
 const screenElement = document.querySelector('.screen')
-const buttonsParentElement = document.querySelector('.calc-buttons')
 
 const resetCalculator = () => {
     screenValue = '0'
@@ -102,4 +101,4 @@ const handleBtnClick = (eventData) => {
 
 }
 
-buttonsParentElement.addEventListener('click', handleBtnClick)
+document.querySelector('.calc-buttons').addEventListener('click', handleBtnClick)
