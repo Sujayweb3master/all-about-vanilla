@@ -5,8 +5,9 @@ const selectorElement = document.querySelector('.selector')
 const spinnerElement = document.querySelector('.spinner')
 
 const handleImageLoaded = () => {
+    const imageElement = document.querySelector('img')
     spinnerElement.classList.add('hide')
-    document.querySelector('img').classList.remove('hide')
+    imageElement.classList.remove('hide')
 }
 
 const fetchRandomDogImage = async () => {
@@ -28,12 +29,9 @@ const fetchImageByBreed = async (breed) => {
 }
 
 const appendInitialImage = (data) => {
-    const imageElement = document.createElement('img')
+    const imageElement = document.querySelector('img')
     imageElement.src = data
     imageElement.addEventListener('load', handleImageLoaded)
-    setTimeout(function () {
-        imageViewSection.appendChild(imageElement)
-    }, 300)
 }
 
 const loadOptionsToSelector = (data) => {
@@ -58,7 +56,6 @@ const initialLoad = async () => {
     appendInitialImage(fetchRandomDogImageResponse.message)
     loadOptionsToSelector(Object.keys(fetchBreedsListResponse.message))
 }
-
 
 function init() {
     initialLoad()
