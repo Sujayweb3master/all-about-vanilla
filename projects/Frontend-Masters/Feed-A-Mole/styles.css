@@ -56,10 +56,14 @@ body {
     align-items: center;
 }
 
+.hole:hover img[src="./assets/mole-hungry.png"] {
+    cursor: url("./assets/cursor-worm.png"), pointer;
+}
+
 .hole img {
     width: 125%;
 }
 
-.hide {
+.gone {
     display: none;
 }
