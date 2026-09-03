@@ -4,15 +4,29 @@
     padding: 0;
 }
 
+html {
+    background-color: #C0C86D;
+}
+
 body {
     width: 100%;
     height: 100%;
-    background-color: #C0C86D;
+    margin: 0px auto;
+    
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 12px 0;
     cursor: url("./assets/cursor.png"), pointer;
+    background-image: url(./assets/background.png);
+    background-repeat: no-repeat;
+    background-position: center;   /* Centers the image */
+
+}
+
+.progress {
+    overflow: hidden;
+    transition: width 0.5s ease-in-out;
 }
 
 .header {
@@ -24,7 +38,7 @@ body {
     height: 930px;
     /* width: 100%;
     height: 100%; */
-    background-image: url(./assets/background.png);
+   
     display: flex;
     justify-content: space-around;
     align-items: start;
@@ -37,5 +51,15 @@ body {
     height: 250px;
     border-radius: 50%;
     background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.hole img {
+    width: 125%;
+}
+
+.hide {
+    display: none;
+}
