@@ -41,9 +41,6 @@ function nextFrame() {
     moles.forEach((mole, index) => {
         if (count === 11) return;
         if (Date.now() > mole.updateTime) {
-            console.log(mole.updateTime)
-            console.log(Date.now())
-            console.log(mole.status)
             switch (mole.status) {
                 case 'gone':
                     holesElementList[index].querySelector('img').src = mole.isKing ? './assets/king-mole-hungry.png' : './assets/mole-hungry.png';
@@ -56,15 +53,13 @@ function nextFrame() {
                     mole.status = 'sad'
                     mole.updateTime = Date.now() + 500;
                     break;
-                case 'fed':
-                    break;
                 case 'sad':
+                case 'fed':
                     holesElementList[index].querySelector('img').src = mole.isKing ? './assets/king-mole-leaving.png' : './assets/mole-leaving.png'
                     mole.status = 'leaving'
                     mole.updateTime = Date.now() + 500;
                     break;
                 case 'leaving':
-                    // holesElementList[index].querySelector('img').src = './assets/mole-leaving.png'
                     mole.status = 'gone'
                     holesElementList[index].querySelector('img').classList.add('gone')
                     mole.updateTime = Date.now() + (2 + (Math.floor(Math.random() * 18) * 1000));
@@ -79,9 +74,43 @@ function nextFrame() {
     requestAnimationFrame(nextFrame);
 }
 
+const attachEventListenerToContainer = () => {
+    document.querySelector('.container').addEventListener('click', (eventData) => {
+        const imgSrc = eventData.target.src;
+        const imgId = eventData.target.id;
+
+        if (!imgSrc || !imgId) return;
+
+        if (imgSrc.includes('mole-hungry')) {
+            const currentMole = moles[imgId - 1]
+            if (progress === 9 || (progress === 8 && currentMole.isKing)) {
+                document.querySelector('.container').classList.add('gone')
+                document.querySelector('#win').classList.remove('gone')
+                document.body.classList.add('noBackgroundImage')
+                document.querySelector('.container').removeEventListener('click', attachEventListenerToContainer)
+            }
+            currentMole.status = 'fed'
+            eventData.target.src = currentMole.isKing ? './assets/king-mole-fed.png' : './assets/mole-fed.png'
+            currentMole.updateTime = Date.now() + 500;
+            const currentWidth = parseInt(document.querySelector('.progress').style.width);
+            if (currentMole.isKing) {
+                document.querySelector('.progress').style.width = `${currentWidth + 20}%`
+                progress += 2;
+            }
+            else {
+                document.querySelector('.progress').style.width = `${currentWidth + 10}%`
+                progress += 1;
+            }
+        }
+    })
+}
+
 function init() {
     initialTransition()
-    setTimeout(nextFrame, 1500)
+    setTimeout(() => {
+        nextFrame()
+        attachEventListenerToContainer()
+    }, 1500)
 }
 
 init()

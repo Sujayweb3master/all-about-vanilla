@@ -16,12 +16,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 0;
     cursor: url("./assets/cursor.png"), pointer;
     background-image: url(./assets/background.png);
     background-repeat: no-repeat;
-    background-position: center;   /* Centers the image */
+    background-position: top;   /* Centers the image */
 
+}
+
+.noBackgroundImage {
+    background-image: none;
 }
 
 .progress {
@@ -36,13 +39,9 @@ body {
 .container {
     width: 1800px;
     height: 930px;
-    /* width: 100%;
-    height: 100%; */
-   
     display: flex;
     justify-content: space-around;
     align-items: start;
-    /* gap: 180px; */
     flex-wrap: wrap;
 }
 
@@ -66,4 +65,10 @@ body {
 
 .gone {
     display: none;
+}
+
+.win {
+    width: 85%;
+    display: block;
+    margin: 0 auto;
 }
