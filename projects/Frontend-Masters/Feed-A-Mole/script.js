@@ -1,17 +1,24 @@
 
 let progress = 0;
 const POINTS_TO_WIN = 10;
+const HUNGRY_INTERVAL = 2000;
+const SAD_INTERVAL = 500
+const FED_iNTERVAL = 500
 let moles = [];
 
 let count = 0;
 
 let holesElementList = document.querySelectorAll('.hole')
 
+const determineIsKing = () => Math.floor(Math.random() * 10) === 1;
+const getRandomMoleEnterTime = () => Date.now() + (2 + (Math.floor(Math.random() * 18)) * 1000);
+//  Date.now() + (2 + (Math.floor(Math.random() * 18) * 1000))
+
 const createSingleMole = () => {
     let mole = {
         status: 'gone',
-        isKing: Math.floor(Math.random() * 10) === 1,
-        updateTime: Date.now() + (2 + (Math.floor(Math.random() * 18)) * 1000)
+        isKing: determineIsKing(),
+        updateTime: getRandomMoleEnterTime()
     }
     moles.push(mole)
 }
@@ -46,24 +53,24 @@ function nextFrame() {
                     holesElementList[index].querySelector('img').src = mole.isKing ? './assets/king-mole-hungry.png' : './assets/mole-hungry.png';
                     holesElementList[index].querySelector('img').classList.remove('gone')
                     mole.status = 'hungry'
-                    mole.updateTime = Date.now() + 2000;
+                    mole.updateTime = Date.now() + HUNGRY_INTERVAL;
                     break;
                 case 'hungry':
                     holesElementList[index].querySelector('img').src = mole.isKing ? './assets/king-mole-sad.png' : './assets/mole-sad.png'
                     mole.status = 'sad'
-                    mole.updateTime = Date.now() + 500;
+                    mole.updateTime = Date.now() + SAD_INTERVAL;
                     break;
                 case 'sad':
                 case 'fed':
                     holesElementList[index].querySelector('img').src = mole.isKing ? './assets/king-mole-leaving.png' : './assets/mole-leaving.png'
                     mole.status = 'leaving'
-                    mole.updateTime = Date.now() + 500;
+                    mole.updateTime = Date.now() + FED_iNTERVAL;
                     break;
                 case 'leaving':
                     mole.status = 'gone'
                     holesElementList[index].querySelector('img').classList.add('gone')
-                    mole.updateTime = Date.now() + (2 + (Math.floor(Math.random() * 18) * 1000));
-                    mole.isKing = Math.floor(Math.random() * 10) === 1;
+                    mole.updateTime = getRandomMoleEnterTime();
+                    mole.isKing = determineIsKing();
                     break;
                 default:
             }
@@ -98,7 +105,7 @@ const attachEventListenerToContainer = () => {
                 progress += 2;
             }
             else {
-                document.querySelector('.progress').style.width = `${currentWidth + 10}%`
+                document.querySelector('.progress').style.width = `${currentWidth + (progress === 0 ? 5 : 10)}%`
                 progress += 1;
             }
         }
@@ -111,6 +118,7 @@ function init() {
         nextFrame()
         attachEventListenerToContainer()
     }, 1500)
+    console.log(document.querySelector('.dataset').dataset.index)
 }
 
 init()
