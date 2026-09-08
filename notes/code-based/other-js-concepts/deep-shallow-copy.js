@@ -65,3 +65,10 @@ console.log(original.address.city);
     // .sort(), .reverse(), .fill(), .copyWithin(). Non-mutating alternatives: .map(), .filter(), 
     // .slice(), .concat(), [...arr].sort().
 // Gotcha 2: Circular references
+    // structuredClone or a purpose-built deep-clone library is mandatory
+// Gotcha 3: Performance cost of deep copying large structures
+// Gotcha 4: Object.assign/spread with getters and setters
+    // Spread and Object.assign copy the evaluated value of a getter, not the getter itself
+    // If you need to preserve accessor descriptors (getters/setters) during a copy, you need Object.getOwnPropertyDescriptors() combined with 
+    // Object.create() or Object.defineProperties() — spread/Object.assign won't preserve them.
+// Gotcha 5: Functions can't be cloned by structuredClone
